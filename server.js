@@ -8,6 +8,7 @@ require("dotenv").config();
 
 const users = require('./routes/api/users')
 const profile = require('./routes/api/profile')
+const posts = require('./routes/api/posts')
 
 const app = express()
 
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 // routes use
 app.use('/api/users', users)
 app.use('/api/profile', profile)
+app.use('/api/posts', posts)
 
 // if(process.env.NODE_ENV === 'production'){
 //     app.use(express.static('client/build'))
