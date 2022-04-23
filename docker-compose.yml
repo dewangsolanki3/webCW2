@@ -1,14 +1,20 @@
 version: '3'
 services:
   react-app:
+    build: ./client/c-w-app
     image: react-app
     stdin_open: true
+    volumes:
+      - ./client/c-w-app:/usr/src/app
     ports:
       - "3000:3000"
     networks:
       - mern-app
   api-server:
+    build: ./
     image: api-server
+    volumes:
+      - ./:/usr/src/app
     ports:
       - "5000:5000"
     networks:

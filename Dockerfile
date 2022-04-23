@@ -1,6 +1,7 @@
 FROM node:14
 
-WORKDIR /server.js
+WORKDIR /usr/src/app
+# WORKDIR /server.js
 
 COPY package*.json ./
 RUN npm install

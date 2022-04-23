@@ -1,6 +1,7 @@
 FROM node:14
 
-WORKDIR /client/c-w-app
+WORKDIR /usr/src/app
+# WORKDIR /client/c-w-app
 
 COPY package*.json ./
 RUN npm install
