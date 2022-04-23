@@ -33,15 +33,6 @@ app.use('/api/users', users)
 app.use('/api/profile', profile)
 app.use('/api/posts', posts)
 
-// if(process.env.NODE_ENV === 'production'){
-//     app.use(express.static('client/build'))
-
-//     app.get('*', (req,res)=> {
-//         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
-//     })
-// }
-
-//PORT in env file
-const PORT = process.env.PORT || 8080
+const PORT = 5000
 
 app.listen( PORT, () => console.log(`App running on localhost: ${PORT}`))

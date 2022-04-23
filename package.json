@@ -4,8 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "client-install": "npm install --prefix client/c-w-app",
     "server": "nodemon server.js",
-    "client": "cd client && cd c-w-app && npm start",
+    "client": "npm start --prefix client/c-w-app",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
