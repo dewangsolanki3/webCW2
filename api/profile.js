@@ -3,12 +3,12 @@ const router = express.Router()
 const mongoose  = require('mongoose')
 const passport  = require('passport')
 
-const Profile = require('../../models/Profile')
-const User = require('../../models/Users')
+const Profile = require('../models/Profile')
+const User = require('../models/Users')
 
-const validateProfileInput = require('../../validation/profile')
-const validateExperienceInput = require('../../validation/experience')
-const validateEducationInput = require('../../validation/education')
+const validateProfileInput = require('../custom_validator/profile')
+const validateExperienceInput = require('../custom_validator/experience')
+const validateEducationInput = require('../custom_validator/education')
 
 
 router.get('/test', (req, res) => {

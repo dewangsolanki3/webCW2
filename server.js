@@ -6,20 +6,19 @@ const path = require('path')
 
 require("dotenv").config();
 
-const users = require('./routes/api/users')
-const profile = require('./routes/api/profile')
-const posts = require('./routes/api/posts')
+const users = require('./api/users')
+const profile = require('./api/profile')
+const posts = require('./api/posts')
 
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-//database connection
+//db 
 const db = require('./config/keys').mongoURI
 mongoose.connect(db).then(() => console.log('MongoDb connected')).catch(err => console.log(err))
 
-// passport configuration (user auth)
 app.use(passport.initialize())
 require('./config/passport')(passport)
 
@@ -30,7 +29,9 @@ app.get('/', (req, res) => {
 
 // routes use
 app.use('/api/users', users)
+// use profile api
 app.use('/api/profile', profile)
+// use post api
 app.use('/api/posts', posts)
 
 const PORT = 5000

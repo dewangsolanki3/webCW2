@@ -7,13 +7,13 @@ const jwt = require('jsonwebtoken')
 
 
 //validation users input
-const validateRegisterInput = require('../../validation/register')
-const validateLoginInput = require('../../validation/login')
+const validateRegisterInput = require('../custom_validator/register')
+const validateLoginInput = require('../custom_validator/login')
 
-const keys = require('../../config/keys')
+const keys = require('../config/keys')
 
-const User = require('../../models/Users')
-const Users = require('../../models/Users')
+const User = require('../models/Users')
+const Users = require('../models/Users')
 
 
 router.get('/test', (req, res) => {
