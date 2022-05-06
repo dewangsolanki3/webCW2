@@ -7,12 +7,13 @@
 #### To get started with the application, perform the following steps below
 
 #### Step 1: Clone the repository
-#### Step 2: ``` cd webCW2 ```
+#### Step 2: ``` cd webCW2/server ```
 #### step 3: ``` npm install ```
 #### step 4: move into client directory
+-> ``` cd .. ```
 -> ``` cd client/c-w-app ```
 #### step 5: inside the client directory ``` npm install ```
-#### step 6: ``` cd ./ ```
+#### step 6: ``` cd ../../ ```
 #### step 7: now lets fire up the docker-compose and build the image 
 -> ``` docker-compose build ```
 #### step 8: now run the docker image
