@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 //db 
-const db = require('./keys/keys').mongoURI
+const db = require('./keys/keys').mongoDB
 mongoose.connect(db).then(() => console.log('MongoDb connected')).catch(err => console.log(err))
 
 app.use(passport.initialize())
@@ -25,7 +25,7 @@ require('./keys/passport')(passport)
 
 // test route
 app.get('/', (req, res) => {
-    res.send("hemllo test from server")
+    res.send("hello test from server")
 })
 
 // routes use

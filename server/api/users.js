@@ -1,9 +1,9 @@
 const express = require('express')
-const router = express.Router()
-const passport = require('passport')
-const gravatar = require('gravatar')
-const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const passport = require('passport')
+const router = express.Router()
+const bcrypt = require('bcryptjs')
+
 
 
 //validation users input
@@ -13,8 +13,6 @@ const validateLoginInput = require('../custom_validator/login')
 const keys = require('../keys/keys')
 
 const User = require('../models/Users')
-const Users = require('../models/Users')
-
 
 router.get('/test', (req, res) => {
     res.send('user test')
@@ -41,18 +39,17 @@ router.post('/register', (req, res) => {
     User.findOne({ email: req.body.email })
         .then(user => {
             if (user) {
-                errors.email = 'Email aldredy exists'
+                errors.email = 'User already exist, try with different email'
                 return res.status(400).json(errors)
             } else {
-                const avatar = gravatar.url(req.body.email, {
-                    s: '200',
-                    r: 'pg',
-                    d: 'robohash'
-                })
+                // const avatar = gravatar.url(req.body.email, {
+                //     s: '200',
+                //     r: 'pg',
+                //     d: 'robohash'
+                // })
                 const newUser = new User({
                     name: req.body.name,
                     email: req.body.email,
-                    avatar,
                     password: req.body.password
                 })
 
@@ -94,7 +91,7 @@ router.post('/login', (req, res) => {
                     if (isMatch) {
                         //user matched 
                         //payload
-                        const payload = { id: user.id, name: user.name, email: user.email, avatar: user.avatar }
+                        const payload = { id: user.id, name: user.name, email: user.email }
 
                         //sign Token 
                         jwt.sign(

@@ -22,7 +22,7 @@ router.get('/',passport.authenticate('jwt',{session: false}),(req,res) => {
     .populate('user', ['name','avatar'])
     .then(profile => {
         if(!profile){
-            errors.noprofile = 'There is no profile for the user'
+            errors.noprofile = 'No profile found, create profile for the user.'
             return res.status(404).json(errors)
         }
         res.json(profile)
@@ -35,7 +35,7 @@ router.get('/all',(req,res) => {
     const errors = {};
 
     Profile.find()
-    .populate('user', ['name','avatar'])
+    .populate('user', ['name'])
     .then(profile => {
         if(!profile){
             errors.noprofile = 'There is no profile'
@@ -48,11 +48,11 @@ router.get('/all',(req,res) => {
 
 
 //get rout by handle
-router.get('/handle/:handle',(req, res) => {
+router.get('/handle/:id',(req, res) => {
     const errors = {}
 
-    Profile.findOne({ handle: req.params.handle })
-    .populate('user', ['name','avatar'])
+    Profile.findOne({ handle: req.params.id })
+    .populate('user', ['name'])
     .then(profile => {
         if(!profile){
             errors.noprofile = 'There is no profile for this user';
@@ -71,7 +71,7 @@ router.get('/user/:user_id',(req, res) => {
     const errors = {}
 
     Profile.findOne({ user: req.params.user_id })
-    .populate('user', ['name','avatar'])
+    .populate('user', ['name'])
     .then(profile => {
         if(!profile){
             errors.noprofile = 'There is no profile for this user';
@@ -206,14 +206,14 @@ router.delete('/experience/:exp_id',passport.authenticate('jwt', {session: false
 
 
 //delete request education
-router.delete('/education/:edu_id',passport.authenticate('jwt', {session: false}), (req, res) => {
+router.delete('/education/:education_id',passport.authenticate('jwt', {session: false}), (req, res) => {
 
     Profile.findOne({ user: req.user.id})
     .then(profile => {
         //get remove index
         const removeIndex = profile.education
         .map(item => item.id)
-        .indexOf(req.params.edu_id);
+        .indexOf(req.params.education_id);
 
         profile.education.splice(removeIndex, 1)
 

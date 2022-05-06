@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const router = express.Router();
 
 const Post = require('../models/Post');
-
 const Profile = require('../models/Profile');
 
 
