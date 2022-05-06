@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken')
 const validateRegisterInput = require('../custom_validator/register')
 const validateLoginInput = require('../custom_validator/login')
 
-const keys = require('../config/keys')
+const keys = require('../keys/keys')
 
 const User = require('../models/Users')
 const Users = require('../models/Users')
@@ -67,18 +67,6 @@ router.post('/register', (req, res) => {
                 })
             }
         })
-
-    // sgMail.setApiKey('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')
-    // const email = req.body.email
-    // const message = {
-    //     to: email,
-    //     from: 'vaishnavbharadwaj22@gmail.com',
-    //     subject: 'Hello from GetConnect',
-    //     text: 'Hello from GetConnect',
-    //     html: '<h1>Thank you!</h1> for getting connected with us!!'
-    // }
-
-    // sgMail.send(message).then(response => console.log('Email sent!')).catch(error => console.log(error.message))
 })
 
 //login route

@@ -17,11 +17,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 //db 
-const db = require('./config/keys').mongoURI
+const db = require('./keys/keys').mongoURI
 mongoose.connect(db).then(() => console.log('MongoDb connected')).catch(err => console.log(err))
 
 app.use(passport.initialize())
-require('./config/passport')(passport)
+require('./keys/passport')(passport)
 
 // test route
 app.get('/', (req, res) => {
