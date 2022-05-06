@@ -6,24 +6,18 @@ const passport  = require('passport')
 const Profile = require('../models/Profile')
 const User = require('../models/Users')
 
-const validateProfileInput = require('../custom_validator/profile')
-const validateExperienceInput = require('../custom_validator/experience')
-const validateEducationInput = require('../custom_validator/education')
 
 
-router.get('/test', (req, res) => {
-    res.send('profile test')
-})
 
 router.get('/',passport.authenticate('jwt',{session: false}),(req,res) => {
-    const errors = {};
+    const errors_list = {};
 
     Profile.findOne({user: req.user.id })
     .populate('user', ['name','avatar'])
     .then(profile => {
         if(!profile){
-            errors.noprofile = 'No profile found, create profile for the user.'
-            return res.status(404).json(errors)
+            errors_list.noprofile = 'No profile found, create profile for the user.'
+            return res.status(404).json(errors_list)
         }
         res.json(profile)
     })
@@ -32,14 +26,14 @@ router.get('/',passport.authenticate('jwt',{session: false}),(req,res) => {
 
 //get all profiles
 router.get('/all',(req,res) => {
-    const errors = {};
+    const errors_list = {};
 
     Profile.find()
     .populate('user', ['name'])
     .then(profile => {
         if(!profile){
-            errors.noprofile = 'There is no profile'
-            return res.status(404).json(errors)
+            errors_list.noprofile = 'There is no profile'
+            return res.status(404).json(errors_list)
         }
         res.json(profile)
     })
@@ -87,12 +81,6 @@ router.get('/user/:user_id',(req, res) => {
 //create user profile
 router.post('/',passport.authenticate('jwt', {session: false}),(req,res) => {
 
-    const { errors, isValid } = validateProfileInput(req.body)
-
-    if(!isValid){
-        return res.status(400).json(errors)
-    }
-
     const profileFields = {}
     profileFields.user = req.user.id;
     if(req.body.handle) profileFields.handle = req.body.handle
@@ -136,12 +124,6 @@ router.post('/',passport.authenticate('jwt', {session: false}),(req,res) => {
 })
 
 router.post('/experience',passport.authenticate('jwt', {session: false}), (req, res) => {
-    const { errors, isValid } = validateExperienceInput(req.body)
-
-    if(!isValid){
-        return res.status(400).json(errors)
-    }
-
     Profile.findOne({ user: req.user.id})
     .then(profile => {
         const newExp = {
@@ -162,12 +144,6 @@ router.post('/experience',passport.authenticate('jwt', {session: false}), (req, 
 
 
 router.post('/education',passport.authenticate('jwt', {session: false}), (req, res) => {
-    const { errors, isValid } = validateEducationInput(req.body)
-
-    if(!isValid){
-        return res.status(400).json(errors)
-    }
-
     Profile.findOne({ user: req.user.id})
     .then(profile => {
         const newEdu = {
