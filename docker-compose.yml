@@ -11,10 +11,10 @@ services:
     networks:
       - mern-app
   api-server:
-    build: ./
+    build: ./server
     image: api-server
     volumes:
-      - ./:/usr/src/app
+      - ./server:/usr/src/app
     ports:
       - "5000:5000"
     networks:
