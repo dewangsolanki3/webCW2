@@ -13,7 +13,7 @@
 -> ``` cd .. ```
 -> ``` cd client/c-w-app ```
 #### step 5: inside the client directory ``` npm install ```
-#### step 6: ``` cd ./ ```
+#### step 6: ``` cd ../../ ```
 #### step 7: now lets fire up the docker-compose and build the image 
 -> ``` docker-compose build ```
 #### step 8: now run the docker image
