@@ -1,12 +1,8 @@
 import { GET_POST, GET_POSTS, ADD_POST, POST_LOADING, DELETE_POST } from '../actions/constants';
 
-const initialState = {
-  loading: false,
-  post: {},
-  posts: []
-}
+let inState = { loading: false, post: {}, posts: [] }
 
-export default (state = initialState, action) => {
+let reducerPost = (state = inState, action) => {
   switch (action.type) {
     case GET_POST:
       return {
@@ -39,3 +35,6 @@ export default (state = initialState, action) => {
       return state
   }
 }
+
+
+export default reducerPost

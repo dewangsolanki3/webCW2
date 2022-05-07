@@ -19,11 +19,7 @@ class AddEducation extends Component {
       description: '',
       errors: {},
       disabled: false
-    };
-
-    // this.onChange = this.onChange.bind(this);
-    // this.onSubmit = this.onSubmit.bind(this);
-    // this.onCheck = this.onCheck.bind(this);
+    }
   }
 
   componentWillReceiveProps(nextProps) {

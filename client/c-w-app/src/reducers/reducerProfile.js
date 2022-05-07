@@ -1,8 +1,8 @@
 import { PROFILE_LOADING, CLEAR_CURRENT_PROFILE, GET_PROFILES, GET_PROFILE } from "../actions/constants"
 
-const initialState = { loading: false, profiles: null, profile: null }
+let inState = { loading: false, profiles: null, profile: null }
 
-export default (state = initialState, action) => {
+let reducerProfile = (state = inState, action) => {
   switch (action.type) {
     case PROFILE_LOADING:
       return {
@@ -30,3 +30,7 @@ export default (state = initialState, action) => {
       return state
   }
 }
+
+
+
+export default reducerProfile

@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import reducerProfile from './reducerProfile'
-import reducerAuth from './reducerAuth'
-import reducerPost from './reducerPost'
-import reducerError from './reducerError'
+import reducerProfile from './reducerProfile.js'
+import reducerAuth from './reducerAuth.js'
+import reducerPost from './reducerPost.js'
+import reducerError from './reducerError.js'
 
 export default combineReducers({
   profile: reducerProfile,

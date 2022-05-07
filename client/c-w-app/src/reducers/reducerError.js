@@ -1,7 +1,8 @@
 import { GET_ERRORS } from '../actions/constants'
-const initialState = {}
 
-export default (state= initialState, action) => {
+let inState = {}
+
+let reducerError = (state = inState, action) => {
     switch(action.type){  
         case GET_ERRORS: 
         return action.payload
@@ -9,3 +10,5 @@ export default (state= initialState, action) => {
             return state
     }
 }
+
+export default reducerError
