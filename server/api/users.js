@@ -5,13 +5,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 
 
-
-//validation users input
-const validateRegisterInput = require('../custom_validator/register')
-const validateLoginInput = require('../custom_validator/login')
-
 const keys = require('../keys/keys')
-
 const User = require('../models/Users')
 
 router.get('/test', (req, res) => {
@@ -28,25 +22,12 @@ router.get('/connect', (req, res) => {
 
 //register route
 router.post('/register', (req, res) => {
-
-    const { errors, isValid } = validateRegisterInput(req.body)
-
-    if (!isValid) {
-        return res.status(400).json(errors);
-    }
-
-
     User.findOne({ email: req.body.email })
         .then(user => {
             if (user) {
                 errors.email = 'User already exist, try with different email'
                 return res.status(400).json(errors)
             } else {
-                // const avatar = gravatar.url(req.body.email, {
-                //     s: '200',
-                //     r: 'pg',
-                //     d: 'robohash'
-                // })
                 const newUser = new User({
                     name: req.body.name,
                     email: req.body.email,
@@ -68,14 +49,6 @@ router.post('/register', (req, res) => {
 
 //login route
 router.post('/login', (req, res) => {
-
-    const { errors, isValid } = validateLoginInput(req.body)
-
-    if (!isValid) {
-        return res.status(400).json(errors);
-    }
-
-
     const email = req.body.email;
     const password = req.body.password;
 
