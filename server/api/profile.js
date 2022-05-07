@@ -82,7 +82,7 @@ router.get('/user/:user_id',(req, res) => {
 router.post('/',passport.authenticate('jwt', {session: false}),(req,res) => {
 
     const profile_data = {}
-    profileFields.user = req.user.id;
+    profile_data.user = req.user.id;
     if(req.body.handle) profile_data.handle = req.body.handle
     if(req.body.company) profile_data.company = req.body.company
     if(req.body.website) profile_data.website = req.body.website
