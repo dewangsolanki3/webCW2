@@ -6,7 +6,7 @@
   "scripts": {
     "client-install": "npm install --prefix client/c-w-app",
     "server": "nodemon server.js",
-    "client": "cd .. && cd client/c-w-app && npm start --prefix client/c-w-app",
+    "client": "cd .. && cd client/c-w-app && npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
