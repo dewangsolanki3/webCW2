@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import TextFieldGroup from '../common/TextFieldGroup.jsx';
-import TextAreaFieldGroup from '../common/TextAreaFieldGroup.jsx';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { addEducation } from '../../actions/profileActions';
+import React, { Component } from 'react'
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup.jsx'
+import TextFieldGroup from '../common/TextFieldGroup.jsx'
+import PropTypes from 'prop-types'
+import { Link, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { addEducation } from '../../actions/profileActions'
 
 class AddEducation extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      school: '',
-      degree: '',
       fieldofstudy: '',
+      degree: '',
+      school: '',
       from: '',
       to: '',
       current: false,
@@ -21,9 +21,9 @@ class AddEducation extends Component {
       disabled: false
     };
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onCheck = this.onCheck.bind(this);
+    // this.onChange = this.onChange.bind(this);
+    // this.onSubmit = this.onSubmit.bind(this);
+    // this.onCheck = this.onCheck.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -32,35 +32,35 @@ class AddEducation extends Component {
     }
   }
 
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit = (event) => {
+    event.preventDefault()
 
     const eduData = {
-      school: this.state.school,
-      degree: this.state.degree,
       fieldofstudy: this.state.fieldofstudy,
+      degree: this.state.degree,
+      school: this.state.school,
       from: this.state.from,
       to: this.state.to,
       current: this.state.current,
       description: this.state.description
-    };
+    }
 
-    this.props.addEducation(eduData, this.props.history);
+    this.props.addEducation(eduData, this.props.history)
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value })
   }
 
-  onCheck(e) {
+  onCheck = (event) => {
     this.setState({
-      disabled: !this.state.disabled,
-      current: !this.state.current
-    });
+      current: !this.state.current,
+      disabled: !this.state.disabled
+    })
   }
 
   render() {
-    const { errors } = this.state;
+    let { errors } = this.state
 
     return (
       <div className="add-education">
@@ -72,7 +72,7 @@ class AddEducation extends Component {
               </Link>
               <h1 className="display-4 text-center">Add Education</h1>
               <p className="lead text-center">
-                Add any school, seminar, etc that you have attended
+                Enter bootcamp, seminar, you attend in past
               </p>
               <small className="d-block pb-3">* = required fields</small>
               <form onSubmit={this.onSubmit}>
@@ -84,7 +84,7 @@ class AddEducation extends Component {
                   error={errors.school}
                 />
                 <TextFieldGroup
-                  placeholder="* Degree or Certification"
+                  placeholder="* Degree "
                   name="degree"
                   value={this.state.degree}
                   onChange={this.onChange}
@@ -146,7 +146,7 @@ class AddEducation extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
@@ -154,13 +154,13 @@ AddEducation.propTypes = {
   addEducation: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
-};
+}
 
 const mapStateToProps = state => ({
-  profile: state.profile,
-  errors: state.errors
-});
+  errors: state.errors,
+  profile: state.profile
+})
 
 export default connect(mapStateToProps, { addEducation })(
   withRouter(AddEducation)
-);
+)
