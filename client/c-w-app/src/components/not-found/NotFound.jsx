@@ -2,9 +2,9 @@ import React from 'react';
 
 export default () => {
   return (
-    <div>
-      <h1 className="display-4">Page Not Found</h1>
-      <p>Sorry, this page does not exist</p>
-    </div>
-  );
-};
+    <>
+      <h2 className="display-4">Error 404 : </h2>
+      <h5>Oops, looks like the page you looking for does'nt exist :( </h5>
+    </>
+  )
+}

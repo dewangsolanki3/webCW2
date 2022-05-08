@@ -1,58 +1,58 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React from 'react';
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
-class ProfileGithub extends Component {
+class ProfileGithub extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      clientId: '33c997749ef050865a06',
-      clientSecret: '15a7b19e155149065817be28fb6fec95e5517f4d',
       count: 5,
+      clientSecret: '15a7b19e155149065817be28fb6fec95e5517f4d',
+      clientId: '33c997749ef050865a06',
       sort: 'created: asc',
       repos: []
-    };
+    }
   }
 
   componentDidMount() {
-    const { username } = this.props;
-    const { count, sort, clientId, clientSecret } = this.state;
+    let { sort, count, clientId, clientSecret } = this.state
+    let { username } = this.props
 
     fetch(
       `https://api.github.com/users/${username}/repos?per_page=${count}&sort=${sort}&client_id=${clientId}&client_secret=${clientSecret}`
     )
-      .then(res => res.json())
+      .then( (response) => response.json())
       .then(data => {
         if (this.refs.myRef) {
-          this.setState({ repos: data });
+          this.setState({ repos: data })
         }
       })
-      .catch(err => console.log(err));
+      .catch(error => console.log(error))
   }
 
   render() {
-    const { repos } = this.state;
+    let { repos } = this.state
 
-    const repoItems = repos.map(repo => (
-      <div key={repo.id} className="card card-body mb-2">
+    let repoItems = repos.map(repository => (
+      <div key={repository.id} className="card card-body mb-2">
         <div className="row">
           <div className="col-md-6">
             <h4>
-              <Link to={repo.html_url} className="text-info" target="_blank">
-                {repo.name}
+              <Link to={repository.html_url} className="text-info" target="_blank">
+                {repository.name}
               </Link>
             </h4>
-            <p>{repo.description}</p>
+            <p>{repository.description}</p>
           </div>
           <div className="col-md-6">
             <span className="badge badge-info mr-1">
-              Stars: {repo.stargazers_count}
+              Stars: {repository.stargazers_count}
             </span>
             <span className="badge badge-secondary mr-1">
-              Watchers: {repo.watchers_count}
+              Watchers: {repository.watchers_count}
             </span>
             <span className="badge badge-success">
-              Forks: {repo.forks_count}
+              Forks: {repository.forks_count}
             </span>
           </div>
         </div>
@@ -60,8 +60,8 @@ class ProfileGithub extends Component {
     ));
     return (
       <div ref="myRef">
-        <hr />
-        <h3 className="mb-4">Latest Github Repos</h3>
+        <hr /> <br />
+        <h4 className="mb-4">Top Github Repositories by - {this.props.username}</h4>
         {repoItems}
       </div>
     );
@@ -70,6 +70,6 @@ class ProfileGithub extends Component {
 
 ProfileGithub.propTypes = {
   username: PropTypes.string.isRequired
-};
+}
 
-export default ProfileGithub;
+export default ProfileGithub

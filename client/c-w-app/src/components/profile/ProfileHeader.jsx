@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import isEmpty from '../../validation/is-empty';
+import React from 'react'
+import isEmpty from '../../validation/is-empty'
 
-class ProfileHeader extends Component {
+class ProfileHeader extends React.Component {
   render() {
-    const { profile } = this.props;
+    let { profile } = this.props
 
     return (
       <div className="row">
@@ -26,15 +26,27 @@ class ProfileHeader extends Component {
                   <span>at {profile.company}</span>
                 )}
               </p>
-              {isEmpty(profile.location) ? null : <p>{profile.location}</p>}
-              <p>
-                {isEmpty(profile.website) ? null : (
+                
+                {isEmpty(profile.location) ? null : <p>{profile.location}</p>}
+                  <p>
+                  {isEmpty(profile.website) ? null : (
+                    <a
+                      className="text-white p-2"
+                      href={profile.website}
+                      target="_blank"
+                    >
+                      <i className="fas fa-globe fa-2x" />
+                    </a>
+                  )}
+
+
+                {isEmpty(profile.social && profile.social.facebook) ? null : (
                   <a
                     className="text-white p-2"
-                    href={profile.website}
+                    href={profile.social.facebook}
                     target="_blank"
                   >
-                    <i className="fas fa-globe fa-2x" />
+                    <i className="fab fa-facebook fa-2x" />
                   </a>
                 )}
 
@@ -48,25 +60,6 @@ class ProfileHeader extends Component {
                   </a>
                 )}
 
-                {isEmpty(profile.social && profile.social.facebook) ? null : (
-                  <a
-                    className="text-white p-2"
-                    href={profile.social.facebook}
-                    target="_blank"
-                  >
-                    <i className="fab fa-facebook fa-2x" />
-                  </a>
-                )}
-
-                {isEmpty(profile.social && profile.social.linkedin) ? null : (
-                  <a
-                    className="text-white p-2"
-                    href={profile.social.linkedin}
-                    target="_blank"
-                  >
-                    <i className="fab fa-linkedin fa-2x" />
-                  </a>
-                )}
 
                 {isEmpty(profile.social && profile.social.youtube) ? null : (
                   <a
@@ -75,6 +68,17 @@ class ProfileHeader extends Component {
                     target="_blank"
                   >
                     <i className="fab fa-youtube fa-2x" />
+                  </a>
+                )}
+
+
+                {isEmpty(profile.social && profile.social.linkedin) ? null : (
+                  <a
+                    className="text-white p-2"
+                    href={profile.social.linkedin}
+                    target="_blank"
+                  >
+                    <i className="fab fa-linkedin fa-2x" />
                   </a>
                 )}
 
@@ -92,8 +96,8 @@ class ProfileHeader extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default ProfileHeader;
+export default ProfileHeader

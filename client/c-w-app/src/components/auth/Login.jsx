@@ -1,22 +1,18 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
 import propTypes from 'prop-types'
-import {connect} from 'react-redux'
-import { loginUser } from '../../actions/authActions'
-import classnames from 'classnames'
+import { loginUser } from '../../actions/authActions.js'
 import TextFieldGroup from '../common/TextFieldGroup.jsx'
 
-class Login extends Component {
+class Login extends React.Component {
 
   constructor(){
     super();
     this.state = {
+      errors : {},
       email: '',
-      password: '',
-      errors : {}
+      password: ''
     }
-
-    this.onSubmit = this.onSubmit.bind(this)
-    this.onChange = this.onChange.bind(this)
   }
 
 
@@ -36,55 +32,53 @@ class Login extends Component {
     }
   }
 
-  onChange(e){
-    this.setState({ [e.target.name]: e.target.value })
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value })
   }
 
-  onSubmit(e){
-    e.preventDefault()
-    const userData = {
+  onSubmit = (event) => {
+    event.preventDefault()
+    const creds = {
       email: this.state.email,
       password: this.state.password
     }
     
-    this.props.loginUser(userData)
+    this.props.loginUser(creds)
   }
 
     render() {
-      const { errors } = this.state;
+      let { errors } = this.state
 
 
         return (
-            <div className="login">
-            <div className="container">
+            <div className="container login"  style={{height:'70vh'}}>
               <div className="row">
                 <div className="col-md-8 m-auto">
-                  <h1 className="display-4 text-center">Log In</h1>
-                  <p className="lead text-center">Sign in to your GetConnect account</p>
+                  <h1 className="display-4 text-center">Register</h1>
+                  <p className="lead text-center">Login to your DevConnect </p>
                   <form onSubmit={this.onSubmit}>
-                    <TextFieldGroup placeholder="Email Address" name="email" type="email" value={this.state.email} onChange={this.onChange} error={errors.email} />
+                    <TextFieldGroup placeholder="Email Address" name="email" type="email" value={this.state.email} onChange={this.handleChange} error={errors.email} />
                     
-                    <TextFieldGroup placeholder="Password" name="password" type="password" value={this.state.password} onChange={this.onChange} error={errors.password} />
+                    <TextFieldGroup placeholder="Password" name="password" type="password" value={this.state.password} onChange={this.handleChange} error={errors.password} />
                     
                     <input type="submit" className="btn btn-info btn-block mt-4" />
                   </form>
                 </div>
               </div>
             </div>
-          </div>
         )
     }
 }
 
 Login.propTypes ={
-  loginUser: propTypes.func.isRequired,
+  errors: propTypes.object.isRequired,
   auth: propTypes.object.isRequired,
-  errors: propTypes.object.isRequired
+  loginUser: propTypes.func.isRequired
 }
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-  errors: state.errors
+const StateInProps = (state) => ({
+  errors: state.errors,
+  auth: state.auth
 })
 
-export default connect(mapStateToProps, {loginUser})(Login);
+export default connect(StateInProps, {loginUser})(Login)

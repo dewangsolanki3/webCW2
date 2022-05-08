@@ -1,26 +1,29 @@
-import React, { Component } from 'react'
+import React from 'react'
 import propTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import classnames from 'classnames'
 import { connect } from 'react-redux'
-import { registerUser } from '../../actions/authActions'
+import { registerUser } from '../../actions/authActions.js'
 import TextFieldGroup from '../common/TextFieldGroup.jsx'
 
-class Register extends Component {
+class Register extends React.Component {
 
   constructor() {
-    super();
+    super()
     this.state = {
+      errors: {},
       name: '',
       email: '',
       password: '',
-      password2: '',
-      errors: {}
+      password2: ''
     }
-
-    this.onChange = this.onChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
   }
+
+
+  
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value })
+  }
+
 
   componentDidMount(){
     if(this.props.auth.isAuthenticated){
@@ -35,67 +38,57 @@ class Register extends Component {
     }
   }
 
-  onChange(e){
-    this.setState({ [e.target.name]: e.target.value })
-  }
+  onSubmit = (event) => {
+    event.preventDefault()
 
-  onSubmit(e){
-    e.preventDefault()
-
-    const newUser = {
+    let bio = {
       name: this.state.name,
       email: this.state.email,
       password: this.state.password,
       password2 : this.state.password2
     }
 
-    this.props.registerUser(newUser, this.props.history)
-    
-
+    this.props.registerUser(bio, this.props.history)
 
   }
 
     render() {
 
-      const { errors } = this.state;
-
-      // const { user } = this.props.auth
+      let { errors } = this.state;
 
         return (
-            <div className="register">
-            <div className="container">
+            <div className="container register">
               <div className="row">
                 <div className="col-md-8 m-auto">
-                  <h1 className="display-4 text-center">Sign Up</h1>
-                  <p className="lead text-center">Create your DevConnector account</p>
+                  <h1 className="display-4 text-center">Register</h1>
+                  <p className="lead text-center">Register for your new DevConnect</p>
                   <form onSubmit={this.onSubmit}>
-                  <TextFieldGroup placeholder="Name" name="name" value={this.state.name} onChange={this.onChange} error={errors.name} />
+                  <TextFieldGroup placeholder="Name" name="name" value={this.state.name} onChange={this.handleChange} error={errors.name} />
 
-                  <TextFieldGroup placeholder="Email Address" name="email" type="email" value={this.state.email} onChange={this.onChange} error={errors.email} />
+                  <TextFieldGroup placeholder="Email Address" name="email" type="email" value={this.state.email} onChange={this.handleChange} error={errors.email} />
 
-                  <TextFieldGroup placeholder="Password" name="password" type="password" value={this.state.password} onChange={this.onChange} error={errors.password} />
+                  <TextFieldGroup placeholder="Password" name="password" type="password" value={this.state.password} onChange={this.handleChange} error={errors.password} />
 
-                  <TextFieldGroup placeholder="Confirm Password" name="password2" type="password" value={this.state.password2} onChange={this.onChange} error={errors.password2} />
+                  <TextFieldGroup placeholder="Confirm Password" name="password2" type="password" value={this.state.password2} onChange={this.handleChange} error={errors.password2} />
 
                   <input type="submit" className="btn btn-info btn-block mt-4" />
                   </form>
                 </div>
               </div>
             </div>
-          </div>
         )
     }
 }
 
 Register.propTypes = {
-  registerUser: propTypes.func.isRequired,
+  errors:propTypes.object.isRequired,
   auth: propTypes.object.isRequired,
-  errors:propTypes.object.isRequired
+  registerUser: propTypes.func.isRequired
 }
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-  errors: state.errors
+let StateInProps = (state) => ({
+  errors: state.errors,
+  auth: state.auth
 })
 
-export default connect(mapStateToProps, { registerUser })(withRouter(Register));
+export default connect(StateInProps, { registerUser })(withRouter(Register))

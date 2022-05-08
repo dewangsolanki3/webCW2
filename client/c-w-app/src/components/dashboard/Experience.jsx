@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import Moment from 'react-moment';
+import React from 'react'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { deleteExperience } from '../../actions/profileActions';
+import PropTypes from 'prop-types'
+import Moment from 'react-moment'
+import { deleteExperience } from '../../actions/profileActions.js'
 
-class Experience extends Component {
-  onDeleteClick(id) {
-    this.props.deleteExperience(id);
+class Experience extends React.Component {
+  clickDelete(id) {
+    this.props.deleteExperience(id)
   }
 
   render() {
@@ -25,8 +25,8 @@ class Experience extends Component {
         </td>
         <td>
           <button
-            onClick={this.onDeleteClick.bind(this, exp._id)}
-            className="btn btn-danger"
+            className="btn-danger btn "
+            onClick={this.clickDelete(exp._id)}
           >
             Delete
           </button>
@@ -35,12 +35,12 @@ class Experience extends Component {
     ));
     return (
       <div>
-        <h4 className="mb-4">Experience Credentials</h4>
+        <h4 className="mb-4">Experience details</h4>
         <table className="table">
           <thead>
             <tr>
               <th>Company</th>
-              <th>Title</th>
+              <th>Job Role</th>
               <th>Years</th>
               <th />
             </tr>
@@ -52,8 +52,6 @@ class Experience extends Component {
   }
 }
 
-Experience.propTypes = {
-  deleteExperience: PropTypes.func.isRequired
-};
+Experience.propTypes = { deleteExperience: PropTypes.func.isRequired }
 
-export default connect(null, { deleteExperience })(withRouter(Experience));
+export default connect(null, { deleteExperience })(withRouter(Experience))

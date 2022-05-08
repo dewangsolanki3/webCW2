@@ -1,34 +1,35 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import classnames from 'classnames';
-import { Link } from 'react-router-dom';
-import { deletePost, addLike, removeLike } from '../../actions/postActions';
+import React from 'react'
+import classnames from 'classnames'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { deletePost, addLike, removeLike } from '../../actions/postActions.js'
 
-class PostItem extends Component {
-  onDeleteClick(id) {
-    this.props.deletePost(id);
+class PostItem extends React.Component {
+  clickDelete = (id) => {
+    this.props.deletePost(id)
   }
 
-  onLikeClick(id) {
+  clickLike = (id) => {
     this.props.addLike(id);
   }
 
-  onUnlikeClick(id) {
+  clickUnlike = (id) => {
     this.props.removeLike(id);
   }
 
-  findUserLike(likes) {
-    const { auth } = this.props;
-    if (likes.filter(like => like.user === auth.user.id).length > 0) {
-      return true;
-    } else {
-      return false;
+  searchUserLike = (likes) => {
+    let { auth } = this.props;
+    if (likes.filter( (like) => like.user === auth.user.id).length > 0) {
+      return true
+    } 
+    else {
+      return false
     }
   }
 
   render() {
-    const { post, auth, showActions } = this.props;
+    const { post, auth, showActions } = this.props
 
     return (
       <div className="card card-body mb-3">
@@ -36,8 +37,8 @@ class PostItem extends Component {
           <div className="col-md-2">
             <a href="profile.html">
               <img
-                className="rounded-circle d-none d-md-block"
                 src={post.avatar}
+                className="d-none d-md-block rounded-circle "
                 alt=""
               />
             </a>
@@ -49,19 +50,19 @@ class PostItem extends Component {
             {showActions ? (
               <span>
                 <button
-                  onClick={this.onLikeClick.bind(this, post._id)}
+                  className="btn-light mr-2 btn "
+                  onClick={this.clickLike(post._id)}
                   type="button"
-                  className="btn btn-light mr-1"
                 >
                   <i
                     className={classnames('fas fa-thumbs-up', {
-                      'text-info': this.findUserLike(post.likes)
+                      'text-info': this.searchUserLike(post.likes)
                     })}
                   />
                   <span className="badge badge-light">{post.likes.length}</span>
                 </button>
                 <button
-                  onClick={this.onUnlikeClick.bind(this, post._id)}
+                  onClick={this.clickUnlike(post._id)}
                   type="button"
                   className="btn btn-light mr-1"
                 >
@@ -72,7 +73,7 @@ class PostItem extends Component {
                 </Link>
                 {post.user === auth.user.id ? (
                   <button
-                    onClick={this.onDeleteClick.bind(this, post._id)}
+                    onClick={this.clickDelete(post._id)}
                     type="button"
                     className="btn btn-danger mr-1"
                   >
@@ -84,26 +85,20 @@ class PostItem extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-PostItem.defaultProps = {
-  showActions: true
-};
+PostItem.defaultProps = { showActions: true }
 
 PostItem.propTypes = {
-  deletePost: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired,
   addLike: PropTypes.func.isRequired,
   removeLike: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired,
+  deletePost: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
-};
+}
 
-const mapStateToProps = state => ({
-  auth: state.auth
-});
+let stateInProps = (state) => ({ auth: state.auth })
 
-export default connect(mapStateToProps, { deletePost, addLike, removeLike })(
-  PostItem
-);
+export default connect(stateInProps, { deletePost, addLike, removeLike })( PostItem )
