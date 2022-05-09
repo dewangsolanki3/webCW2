@@ -1,6 +1,6 @@
 ## DevHub
 
-### DeVHub is a web application that mimics the LinkedIn application that is build for developer, trying to connect with each other and posting the problem and trying to close the issue of that particular problem.
+### DevHub is a web application that mimics the LinkedIn application that is build for developer, trying to connect with each other and posting the problem and trying to close the issue of that particular problem.
 
 #### This application consist of 3 components, one being front-end developed using **React-Js** framework, **server-side** code developed using **Node js and express API**, and for data storage, we have used **MongoDb atlas**. 
 
