@@ -19,6 +19,7 @@
 #### step 8: now run the docker image
 -> ``` docker-compose up ```
 #### once the output says webpack completed and starting development server
+#### once its says webpack build completed
 #### go the web browser and type in ``` http://localhost:3000/ ```
 #### this will start the web application and you can play around it !
 
