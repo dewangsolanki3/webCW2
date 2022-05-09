@@ -3,7 +3,7 @@ import isEmpty from '../../validation/is-empty'
 
 class ProfileHeader extends React.Component {
   render() {
-    let { profile } = this.props
+    const { profile } = this.props
 
     return (
       <div className="row">

@@ -29,7 +29,7 @@ class CommentItem extends React.Component {
             <p className="lead">{comment.text}</p>
             {comment.user === auth.user.id ? (
               <button
-                onClick={this.clickDelete(postId, comment._id)}
+                onClick={ () => this.clickDelete(postId, comment._id)}
                 type="button"
                 className="btn-danger mr-2 btn "
               >

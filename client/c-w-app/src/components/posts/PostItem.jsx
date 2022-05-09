@@ -51,18 +51,18 @@ class PostItem extends React.Component {
               <span>
                 <button
                   className="btn-light mr-2 btn "
-                  onClick={this.clickLike(post._id)}
+                  onClick={ () => this.clickLike(post._id)}
                   type="button"
                 >
                   <i
                     className={classnames('fas fa-thumbs-up', {
-                      'text-info': this.searchUserLike(post.likes)
+                      'text-info': () => this.searchUserLike(post.likes)
                     })}
                   />
                   <span className="badge badge-light">{post.likes.length}</span>
                 </button>
                 <button
-                  onClick={this.clickUnlike(post._id)}
+                  onClick={ () => this.clickUnlike(post._id)}
                   type="button"
                   className="btn btn-light mr-1"
                 >
@@ -73,7 +73,7 @@ class PostItem extends React.Component {
                 </Link>
                 {post.user === auth.user.id ? (
                   <button
-                    onClick={this.clickDelete(post._id)}
+                    onClick={ () => this.clickDelete(post._id)}
                     type="button"
                     className="btn btn-danger mr-1"
                   >
