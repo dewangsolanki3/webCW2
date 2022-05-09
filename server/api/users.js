@@ -63,7 +63,7 @@ router.get('/current', passport.authenticate('jwt', { session: false }), (reques
 router.post('/login', (request, response) => {
     let password = request.body.password
     let email = request.body.email
-
+    console.log(request.body)
     User.findOne({ email })
         .then(user => {
             if (!user) {
@@ -75,16 +75,17 @@ router.post('/login', (request, response) => {
                 .then(isMatch => {
                     if (isMatch) {
                         let payload = { id: user.id, name: user.name, email: user.email }
-
+                        console.log("It matched!")
                         jwt.sign(
                             payload,
                             keys.secretOrKey,
-                            { expiresIn: 3600 },
+                            { expiresIn: 4000 },
                             (err, token) => {
-                                res.json({
+                                response.json({
                                     success: true,
                                     token: 'Bearer ' + token
                                 })
+                                console.log("Token", token)
                             })
 
                     } else {
