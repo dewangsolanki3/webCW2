@@ -4,7 +4,7 @@
 
 #### This application consist of 3 components, one being front-end developed using **React-Js** framework, **server-side** code developed using **Node js and express API**, and for data storage, we have used **MongoDb atlas**. 
 
-#### To get started with the application, perform the following steps below
+#### To get started with the application, perform the following steps below:
 
 #### Step 1: Clone the repository
 #### Step 2: ``` cd webCW2/server ```
