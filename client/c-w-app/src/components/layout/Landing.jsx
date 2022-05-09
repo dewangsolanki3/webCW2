@@ -19,7 +19,7 @@ class Landing extends React.Component {
                     <div className="container" >
                         <div className="row">
                             <div className="col-md-12 text-center" style = {{marginTop : "80px"}}>
-                                <h1 className="display-3 mb-4">Get Connect
+                                <h1 className="display-3 mb-4">DevHub
                                 </h1>
                                 <p className="lead"> Share posts, Connect with other Developers, View their work and much more ...</p>
                                 <Link to="/login" className="btn btn-lg btn-light mr-2">Login</Link>

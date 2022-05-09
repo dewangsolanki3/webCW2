@@ -2,8 +2,7 @@ import React from 'react'
 
 export default function Footer() {
     return (
-        <footer className="bg-dark text-white mt-5 p-4 text-center" style={{position: "relative" , bottom:"0" , width: "100%"}}>
-            Copyright &copy; {new Date().getFullYear()} GetConnect
-        </footer>
+        <>
+        </>
     )
 }

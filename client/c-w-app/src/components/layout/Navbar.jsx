@@ -37,9 +37,9 @@ class Navbar extends React.Component {
             <img
               className="rounded-circle"
               title="you must have a Gravatar connected"
-              src={user.avatar}
+              src="https://cdn.dribbble.com/users/1577045/screenshots/4914645/media/028d394ffb00cb7a4b2ef9915a384fd9.png?compress=1&resize=400x300"
               alt={user.name}
-              style={{ width: "25px", marginRight: "5px" }}
+              style={{ width: "35px", marginRight: "10px", height: "30px" }}
             />
             Logout
           </Link>
@@ -70,7 +70,7 @@ class Navbar extends React.Component {
         <nav style = {{ position: "relative", zIndex: 10 , width: "100%"}} className="mb-4 navbar navbar-dark bg-dark navbar-expand-sm">
           <div className="container">
             <Link className="navbar-brand" to="/">
-              GetConnect
+              DevHub
             </Link>
             <button
               className="navbar-toggler"
