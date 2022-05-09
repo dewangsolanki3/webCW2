@@ -1,37 +1,35 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import TextFieldGroup from '../common/TextFieldGroup.jsx';
-import TextAreaFieldGroup from '../common/TextAreaFieldGroup.jsx';
-import InputGroup from '../common/InputGroup.jsx';
-import SelectListGroup from '../common/SelectListGroup.jsx';
-import { createProfile, getCurrentProfile } from '../../actions/profileActions';
-import isEmpty from '../../validation/is-empty';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Link, withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import isEmpty from '../../validation/is-empty'
+import InputGroup from '../common/InputGroup.jsx'
+import TextFieldGroup from '../common/TextFieldGroup.jsx'
+import { createProfile, getCurrentProfile } from '../../actions/profileActions.js'
+import SelectListGroup from '../common/SelectListGroup.jsx'
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup.jsx'
+
 
 class CreateProfile extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       displaySocialInputs: false,
-      handle: '',
       company: '',
+      instagram: '',
+      skills: '',
+      twitter: '',
       website: '',
+      youtube: '',
+      handle: '',
       location: '',
       status: '',
-      skills: '',
       githubusername: '',
-      bio: '',
-      twitter: '',
       facebook: '',
+      bio: '',
       linkedin: '',
-      youtube: '',
-      instagram: '',
       errors: {}
-    };
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    }
   }
 
   componentDidMount() {
@@ -40,151 +38,141 @@ class CreateProfile extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
+      this.setState({ errors: nextProps.errors })
     }
 
     if (nextProps.profile.profile) {
-      const profile = nextProps.profile.profile;
+      let profile = nextProps.profile.profile
 
-      // Bring skills array back to CSV
-      const skillsCSV = profile.skills.join(',');
+      let skillsCSV = profile.skills.join(',')
 
-      // If profile field doesnt exist, make empty string
-      profile.company = !isEmpty(profile.company) ? profile.company : '';
-      profile.website = !isEmpty(profile.website) ? profile.website : '';
-      profile.location = !isEmpty(profile.location) ? profile.location : '';
-      profile.githubusername = !isEmpty(profile.githubusername)
-        ? profile.githubusername
-        : '';
-      profile.bio = !isEmpty(profile.bio) ? profile.bio : '';
-      profile.social = !isEmpty(profile.social) ? profile.social : {};
-      profile.twitter = !isEmpty(profile.social.twitter)
-        ? profile.social.twitter
-        : '';
-      profile.facebook = !isEmpty(profile.social.facebook)
-        ? profile.social.facebook
-        : '';
-      profile.linkedin = !isEmpty(profile.social.linkedin)
-        ? profile.social.linkedin
-        : '';
-      profile.youtube = !isEmpty(profile.social.youtube)
-        ? profile.social.youtube
-        : '';
-      profile.instagram = !isEmpty(profile.social.instagram)
-        ? profile.social.instagram
-        : '';
+      profile.location = !isEmpty(profile.location) ? profile.location : ''
+      profile.website = !isEmpty(profile.website) ? profile.website : ''
+      profile.company = !isEmpty(profile.company) ? profile.company : ''
+      profile.githubusername = !isEmpty(profile.githubusername) ? profile.githubusername : ''
+      profile.social = !isEmpty(profile.social) ? profile.social : {}
+      profile.bio = !isEmpty(profile.bio) ? profile.bio : ''
+      profile.facebook = !isEmpty(profile.social.facebook) ? profile.social.facebook : ''
+      profile.linkedin = !isEmpty(profile.social.linkedin) ? profile.social.linkedin : ''
+      profile.youtube = !isEmpty(profile.social.youtube) ? profile.social.youtube : ''
+      profile.twitter = !isEmpty(profile.social.twitter) ? profile.social.twitter : ''
+      profile.instagram = !isEmpty(profile.social.instagram) ? profile.social.instagram : ''
 
-      // Set component fields state
+
       this.setState({
-        handle: profile.handle,
-        company: profile.company,
-        website: profile.website,
-        location: profile.location,
-        status: profile.status,
-        skills: skillsCSV,
-        githubusername: profile.githubusername,
         bio: profile.bio,
-        twitter: profile.twitter,
-        facebook: profile.facebook,
+        handle: profile.handle,
+        instagram: profile.instagram,
+        website: profile.website,
+        status: profile.status,
         linkedin: profile.linkedin,
+        skills: skillsCSV,
         youtube: profile.youtube,
-        instagram: profile.instagram
-      });
+        company: profile.company,
+        location: profile.location,
+        githubusername: profile.githubusername,
+        twitter: profile.twitter,
+        facebook: profile.facebook
+      })
     }
   }
 
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(event) {
+    event.preventDefault()
 
-    const profileData = {
-      handle: this.state.handle,
-      company: this.state.company,
-      website: this.state.website,
+    let bio = {
+      bio: this.state.bio,
       location: this.state.location,
+      company: this.state.company,
+      facebook: this.state.facebook,
+      instagram: this.state.instagram,
+      website: this.state.website,
       status: this.state.status,
       skills: this.state.skills,
       githubusername: this.state.githubusername,
-      bio: this.state.bio,
+      handle: this.state.handle,
       twitter: this.state.twitter,
-      facebook: this.state.facebook,
-      linkedin: this.state.linkedin,
       youtube: this.state.youtube,
-      instagram: this.state.instagram
-    };
+      linkedin: this.state.linkedin,
+    }
 
-    this.props.createProfile(profileData, this.props.history);
+    this.props.createProfile(bio, this.props.history)
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  handleChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value })
   }
 
   render() {
-    const { errors, displaySocialInputs } = this.state;
+    const { errors, displaySocialInputs } = this.state
 
-    let socialInputs;
+    let socialInputs = ""
 
     if (displaySocialInputs) {
       socialInputs = (
         <div>
           <InputGroup
-            placeholder="Twitter Profile URL"
-            name="twitter"
-            icon="fab fa-twitter"
+            onChange={this.handleChange}
             value={this.state.twitter}
-            onChange={this.onChange}
+            placeholder="Twitter Profile URL"
+            icon="fab fa-twitter"
+            name="twitter"
             error={errors.twitter}
           />
+        
+          
+          <InputGroup
+            onChange={this.handleChange}
+            value={this.state.linkedin}
+            placeholder="Linkedin Profile URL"
+            icon="fab fa-linkedin"
+            name="linkedin"
+            error={errors.linkedin}
+          />
+
 
           <InputGroup
-            placeholder="Facebook Page URL"
+            onChange={this.handleChange}
+            value={this.state.facebook}
             name="facebook"
             icon="fab fa-facebook"
-            value={this.state.facebook}
-            onChange={this.onChange}
+            placeholder="Facebook Page URL"
             error={errors.facebook}
           />
 
           <InputGroup
-            placeholder="Linkedin Profile URL"
-            name="linkedin"
-            icon="fab fa-linkedin"
-            value={this.state.linkedin}
-            onChange={this.onChange}
-            error={errors.linkedin}
+            onChange={this.handleChange}
+            placeholder="Instagram Page URL"
+            value={this.state.instagram}
+            name="instagram"
+            icon="fab fa-instagram"
+            error={errors.instagram}
           />
 
+
           <InputGroup
-            placeholder="YouTube Channel URL"
+            onChange={this.handleChange}
             name="youtube"
-            icon="fab fa-youtube"
             value={this.state.youtube}
-            onChange={this.onChange}
+            placeholder="YouTube Channel URL"
+            icon="fab fa-youtube"
             error={errors.youtube}
           />
 
-          <InputGroup
-            placeholder="Instagram Page URL"
-            name="instagram"
-            icon="fab fa-instagram"
-            value={this.state.instagram}
-            onChange={this.onChange}
-            error={errors.instagram}
-          />
+         
         </div>
       );
     }
 
-    // Select options for status
     const options = [
       { label: '* Select Professional Status', value: 0 },
+      { label: 'Instructor or Teacher', value: 'Instructor or Teacher' },
       { label: 'Developer', value: 'Developer' },
+      { label: 'Student or Learning', value: 'Student or Learning' },
       { label: 'Junior Developer', value: 'Junior Developer' },
       { label: 'Senior Developer', value: 'Senior Developer' },
-      { label: 'Manager', value: 'Manager' },
-      { label: 'Student or Learning', value: 'Student or Learning' },
-      { label: 'Instructor or Teacher', value: 'Instructor or Teacher' },
       { label: 'Intern', value: 'Intern' },
+      { label: 'Manager', value: 'Manager' },
       { label: 'Other', value: 'Other' }
     ];
 
@@ -200,83 +188,83 @@ class CreateProfile extends Component {
               <small className="d-block pb-3">* = required fields</small>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
-                  placeholder="* Profile Handle"
-                  name="handle"
+                  onChange={this.handleChange}
+                  placeholder="* Handle Profile"
                   value={this.state.handle}
-                  onChange={this.onChange}
+                  name="handle"
+                  info="A special handle for your account (example - full name, nickname, company's name)"
                   error={errors.handle}
-                  info="A unique handle for your profile URL. Your full name, company name, nickname"
                 />
                 <SelectListGroup
+                  value={this.state.status}
+                  onChange={this.handleChange}
+                  options={options}
                   placeholder="Status"
                   name="status"
-                  value={this.state.status}
-                  onChange={this.onChange}
-                  options={options}
+                  info="Your career status of where you are"
                   error={errors.status}
-                  info="Give us an idea of where you are at in your career"
                 />
                 <TextFieldGroup
                   placeholder="Company"
                   name="company"
                   value={this.state.company}
-                  onChange={this.onChange}
+                  onChange={this.handleChange}
                   error={errors.company}
-                  info="Could be your own company or one you work for"
+                  info="Your work Company or your own"
                 />
                 <TextFieldGroup
+                  value={this.state.website}
+                  onChange={this.handleChange}
                   placeholder="Website"
                   name="website"
-                  value={this.state.website}
-                  onChange={this.onChange}
                   error={errors.website}
-                  info="Could be your own website or a company one"
+                  info="Add any personal website or Company's"
                 />
                 <TextFieldGroup
+                  value={this.state.location}
+                  onChange={this.handleChange}
                   placeholder="Location"
                   name="location"
-                  value={this.state.location}
-                  onChange={this.onChange}
                   error={errors.location}
-                  info="City or city & state suggested (eg. Boston, MA)"
+                  info="Town / State (example - Guildford, Surrey)"
                 />
                 <TextFieldGroup
+                  value={this.state.skills}
+                  onChange={this.handleChange}
                   placeholder="* Skills"
                   name="skills"
-                  value={this.state.skills}
-                  onChange={this.onChange}
                   error={errors.skills}
-                  info="Please use comma separated values (eg.
-                    HTML,CSS,JavaScript,PHP"
+                  info="Add only comma separated texts (example - 
+                    Java, HTML,JavaScript,Python"
                 />
                 <TextFieldGroup
+                  value={this.state.githubusername}
+                  onChange={this.handleChange}
                   placeholder="Github Username"
                   name="githubusername"
-                  value={this.state.githubusername}
-                  onChange={this.onChange}
                   error={errors.githubusername}
-                  info="If you want your latest repos and a Github link, include your username"
+                  info="Add your username to display your top gibhub repositories"
                 />
                 <TextAreaFieldGroup
-                  placeholder="Short Bio"
-                  name="bio"
                   value={this.state.bio}
-                  onChange={this.onChange}
+                  onChange={this.handleChange}
+                  name="bio"
+                  placeholder="Short Bio"
                   error={errors.bio}
                   info="Tell us a little about yourself"
                 />
 
                 <div className="mb-3">
                   <button
-                    type="button"
-                    onClick={() => {
-                      this.setState(prevState => ({
-                        displaySocialInputs: !prevState.displaySocialInputs
-                      }));
-                    }}
                     className="btn btn-light"
+                    onClick={() => {
+                      this.setState( (prevState) => ({
+                        displaySocialInputs: !prevState.displaySocialInputs
+                      }))
+                    }}
+                    type="button"
                   >
-                    Add Social Network Links
+                    Input Social Media urls
                   </button>
                   <span className="text-muted">Optional</span>
                 </div>
@@ -291,22 +279,22 @@ class CreateProfile extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 CreateProfile.propTypes = {
-  createProfile: PropTypes.func.isRequired,
-  getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
-};
+  createProfile: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired
+}
 
-const mapStateToProps = state => ({
-  profile: state.profile,
-  errors: state.errors
-});
+const stateInProps = (state) => ({
+  errors: state.errors,
+  profile: state.profile
+})
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
+export default connect(stateInProps, { createProfile, getCurrentProfile })(
   withRouter(CreateProfile)
-);
+)

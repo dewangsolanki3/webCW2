@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import Moment from 'react-moment';
-import { deleteEducation } from '../../actions/profileActions';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import Moment from 'react-moment'
+import { deleteEducation } from '../../actions/profileActions.js'
 
-class Education extends Component {
-  onDeleteClick(id) {
-    this.props.deleteEducation(id);
+class Education extends React.Component {
+  clickDelete(id) {
+    this.props.deleteEducation(id)
   }
 
   render() {
-    const education = this.props.education.map(edu => (
+    let education = this.props.education.map(edu => (
       <tr key={edu._id}>
         <td>{edu.school}</td>
         <td>{edu.degree}</td>
@@ -24,21 +24,21 @@ class Education extends Component {
         </td>
         <td>
           <button
-            onClick={this.onDeleteClick.bind(this, edu._id)}
-            className="btn btn-danger"
+            className="btn-danger btn "
+            onClick={this.clickDelete(edu._id)}
           >
             Delete
           </button>
         </td>
       </tr>
-    ));
+    ))
     return (
-      <div>
-        <h4 className="mb-4">Education Credentials</h4>
+      <>
+        <h3 className="mb-4">Education details</h3>
         <table className="table">
           <thead>
             <tr>
-              <th>School</th>
+              <th>College</th>
               <th>Degree</th>
               <th>Years</th>
               <th />
@@ -46,13 +46,11 @@ class Education extends Component {
             {education}
           </thead>
         </table>
-      </div>
-    );
+      </>
+    )
   }
 }
 
-Education.propTypes = {
-  deleteEducation: PropTypes.func.isRequired
-};
+Education.propTypes = { deleteEducation: PropTypes.func.isRequired }
 
 export default connect(null, { deleteEducation })(Education);

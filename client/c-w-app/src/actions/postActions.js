@@ -8,7 +8,7 @@ import {
   GET_POST,
   POST_LOADING,
   DELETE_POST
-} from './constants.js';
+} from './types';
 
 // Add Post
 export const addPost = postData => dispatch => {

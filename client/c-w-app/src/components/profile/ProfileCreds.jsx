@@ -1,89 +1,89 @@
-import React, { Component } from 'react';
-import Moment from 'react-moment';
+import React from 'react'
+import Moment from 'react-moment'
 
-class ProfileCreds extends Component {
+class ProfileCreds extends React.Component {
   render() {
-    const { experience, education } = this.props;
+    let { experience, education } = this.props
 
-    const expItems = experience.map(exp => (
-      <li key={exp._id} className="list-group-item">
-        <h4>{exp.company}</h4>
+    let experienceItems = experience.map( experience => (
+      <li key={experience._id} className="list-group-item">
+        <h4>{experience.company}</h4>
         <p>
-          <Moment format="YYYY/MM/DD">{exp.from}</Moment> -
-          {exp.to === null ? (
+          <Moment format="YYYY/MM/DD">{experience.from}</Moment> -
+          {experience.to === null ? (
             ' Now'
           ) : (
-            <Moment format="YYYY/MM/DD">{exp.to}</Moment>
+            <Moment format="YYYY/MM/DD">{experience.to}</Moment>
           )}
         </p>
         <p>
-          <strong>Position:</strong> {exp.title}
+          <strong>Position:</strong> {experience.title}
         </p>
         <p>
-          {exp.location === '' ? null : (
+          {experience.location === '' ? null : (
             <span>
-              <strong>Location: </strong> {exp.location}
+              <strong>Location: </strong> {experience.location}
             </span>
           )}
         </p>
         <p>
-          {exp.description === '' ? null : (
+          {experience.description === '' ? null : (
             <span>
-              <strong>Description: </strong> {exp.description}
+              <strong>Description: </strong> {experience.description}
             </span>
           )}
         </p>
       </li>
     ));
 
-    const eduItems = education.map(edu => (
-      <li key={edu._id} className="list-group-item">
-        <h4>{edu.school}</h4>
+    let educationItems = education.map(education => (
+      <li key={education._id} className="list-group-item">
+        <h4>{education.school}</h4>
         <p>
-          <Moment format="YYYY/MM/DD">{edu.from}</Moment> -
-          {edu.to === null ? (
+          <Moment format="YYYY/MM/DD">{education.from}</Moment> -
+          {education.to === null ? (
             ' Now'
           ) : (
-            <Moment format="YYYY/MM/DD">{edu.to}</Moment>
+            <Moment format="YYYY/MM/DD">{education.to}</Moment>
           )}
         </p>
         <p>
-          <strong>Degree:</strong> {edu.degree}
+          <strong>Degree:</strong> {education.degree}
         </p>
         <p>
-          <strong>Field Of Study:</strong> {edu.fieldofstudy}
+          <strong>Field Of Study:</strong> {education.fieldofstudy}
         </p>
         <p>
-          {edu.description === '' ? null : (
+          {education.description === '' ? null : (
             <span>
-              <strong>Description: </strong> {edu.description}
+              <strong>Description: </strong> {education.description}
             </span>
           )}
         </p>
       </li>
-    ));
+    ))
     return (
       <div className="row">
         <div className="col-md-6">
           <h3 className="text-center text-info">Experience</h3>
-          {expItems.length > 0 ? (
-            <ul className="list-group">{expItems}</ul>
+          {experienceItems.length > 0 ? (
+            <ul className="list-group">{experienceItems}</ul>
           ) : (
-            <p className="text-center">No Experience Listed</p>
+            <p className="text-center">There is no Experience Listed</p>
           )}
         </div>
 
         <div className="col-md-6">
           <h3 className="text-center text-info">Education</h3>
-          {eduItems.length > 0 ? (
-            <ul className="list-group">{eduItems}</ul>
+          {educationItems.length > 0 ? (
+            <ul className="list-group">{educationItems}</ul>
           ) : (
-            <p className="text-center">No Education Listed</p>
+            <p className="text-center">There is no Education Listed</p>
           )}
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default ProfileCreds;
+export default ProfileCreds

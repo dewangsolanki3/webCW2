@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import PostItem from '../posts/PostItem.jsx';
-import CommentForm from './CommentForm.jsx';
-import CommentFeed from './CommentFeed.jsx';
-import Spinner from '../common/Spinner.jsx';
-import { getPost } from '../../actions/postActions';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import CommentFeed from './CommentFeed.jsx'
+import { connect } from 'react-redux'
+import PostItem from '../posts/PostItem.jsx'
+import Spinner from '../common/Spinner.jsx'
+import CommentForm from './CommentForm.jsx'
+import { getPost } from '../../actions/postActions.js'
 
-class Post extends Component {
+class Post extends React.Component {
   componentDidMount() {
     this.props.getPost(this.props.match.params.id);
   }
 
   render() {
-    const { post, loading } = this.props.post;
-    let postContent;
+    let { post, loading } = this.props.post
+    let postContent = ""
 
     if (post === null || loading || Object.keys(post).length === 0) {
       postContent = <Spinner />;
@@ -49,10 +49,10 @@ class Post extends Component {
 Post.propTypes = {
   getPost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired
-};
+}
 
-const mapStateToProps = state => ({
+let stateInProps = (state) => ({
   post: state.post
-});
+})
 
-export default connect(mapStateToProps, { getPost })(Post);
+export default connect(stateInProps, { getPost })(Post)

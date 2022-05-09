@@ -1,81 +1,91 @@
-const express = require('express')
-const jwt = require('jsonwebtoken')
-const passport = require('passport')
-const router = express.Router()
-const bcrypt = require('bcryptjs')
+let express = require('express')
+let bcrypt = require('bcryptjs')
+let passport = require('passport')
+let router = express.Router()
+let jwt = require('jsonwebtoken')
+let User = require('../models/Users.js')
+let keys = require('../keys/keys.js')
 
 
-const keys = require('../keys/keys')
-const User = require('../models/Users')
 
-router.get('/test', (req, res) => {
-    res.send('user test')
-})
 
-// connection with db test api
-router.get('/connect', (req, res) => {
-    User.find({}, function (err, result) {
-        if (err) throw err;
-        console.log(result);
+router.get('/connect', (request, response) => {
+    User.find({}, (error, result) => {
+        if (error) throw error
     })
 })
 
-//register route
-router.post('/register', (req, res) => {
-    User.findOne({ email: req.body.email })
-        .then(user => {
-            if (user) {
-                errors.email = 'User already exist, try with different email'
-                return res.status(400).json(errors)
+
+
+router.get('/test', (request, response) => {
+    response.send('user test')
+})
+
+
+
+router.post('/register', (request, response) => {
+    User.findOne({ email: request.body.email })
+        .then(dataUser => {
+            if (dataUser) {
+                errors.email = 'email exists, please try again'
+                return response.status(400).json(errors)
             } else {
-                const newUser = new User({
-                    name: req.body.name,
-                    email: req.body.email,
-                    password: req.body.password
+                let newUser = new User({
+                    name: request.body.name,
+                    email: request.body.email,
+                    password: request.body.password
                 })
 
-                bcrypt.genSalt(10, (err, salt) => {
-                    bcrypt.hash(newUser.password, salt, (err, hash) => {
-                        if (err) throw err
+                bcrypt.genSalt(10, (error, salt) => {
+                    bcrypt.hash(newUser.password, salt, (error, hash) => {
+                        if (error) throw error
                         newUser.password = hash
                         newUser.save()
-                            .then(user => res.json(user))
-                            .catch(err => console.log(err))
+                            .then(dataUser => response.json(dataUser))
+                            .catch(error => console.log(error))
                     })
                 })
             }
         })
 })
 
-//login route
-router.post('/login', (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
 
+
+router.get('/current', passport.authenticate('jwt', { session: false }), (request, response) => {
+    response.json({
+        id: request.user.id,
+        name: request.user.name
+    })
+})
+
+
+
+router.post('/login', (request, response) => {
+    let password = request.body.password
+    let email = request.body.email
+    console.log(request.body)
     User.findOne({ email })
         .then(user => {
             if (!user) {
                 errors.email = 'Users not found'
-                return res.status(404).json(errors)
+                return response.status(404).json(errors)
             }
 
             bcrypt.compare(password, user.password)
                 .then(isMatch => {
                     if (isMatch) {
-                        //user matched 
-                        //payload
-                        const payload = { id: user.id, name: user.name, email: user.email }
-
-                        //sign Token 
+                        let payload = { id: user.id, name: user.name, email: user.email }
+                        console.log("It matched!")
                         jwt.sign(
                             payload,
                             keys.secretOrKey,
-                            { expiresIn: 3600 },
+                            { expiresIn: 4000 },
                             (err, token) => {
-                                res.json({
+                                response.json({
                                     success: true,
                                     token: 'Bearer ' + token
                                 })
+                                console.log("Token", token)
                             })
 
                     } else {
@@ -86,12 +96,6 @@ router.post('/login', (req, res) => {
         })
 })
 
-//current user
-router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
-    res.json({
-        id: req.user.id,
-        name: req.user.name
-    })
-})
+
 
 module.exports = router

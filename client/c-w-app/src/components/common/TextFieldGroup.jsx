@@ -3,20 +3,19 @@ import classnames from 'classnames'
 import propTypes from 'prop-types'
 
 const TextFieldGroup = ({
-    name,
-    placeholder,
-    value,
-    label,
     info,
-    error,
+    placeholder,
+    name,
+    value,
     type,
     onChange,
+    error,
     disabled
 }) => {
     return (
         <div className="form-group">
-            <input type={type} className={classnames('form-control form-control-lg', { 'is-invalid': error })} placeholder={placeholder} name={name} value={value} onChange={onChange} disabled={disabled} />
-            {info && <small className="form-text text-muted">{info}</small>}
+            <input type={type} onChange={onChange} className={classnames('form-control-lg form-control ', { 'is-invalid': error })} value={value} name={name} disabled={disabled} placeholder={placeholder}  />
+            {info && <small className="text-muted form-text ">{info}</small>}
             {error && (<div className="invalid-feedback">{error}</div>)}
         </div>
     )
@@ -24,18 +23,16 @@ const TextFieldGroup = ({
 
 
 TextFieldGroup.prototype = {
-    name: propTypes.string.isRequired,
-    placeholder: propTypes.string,
-    value: propTypes.string.isRequired,
-    info: propTypes.string,
-    error: propTypes.string,
-    type: propTypes.string.isRequired,
     onChange: propTypes.func.isRequired,
-    disabled: propTypes.string
+    placeholder: propTypes.string,
+    disabled: propTypes.string,
+    type: propTypes.string.isRequired,
+    value: propTypes.string.isRequired,
+    name: propTypes.string.isRequired,
+    info: propTypes.string,
+    error: propTypes.string
 }
 
-TextFieldGroup.defaultProps = {
-    type: 'text'
-}
+TextFieldGroup.defaultProps = { type: 'text' }
 
 export default TextFieldGroup

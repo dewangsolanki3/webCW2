@@ -1,21 +1,18 @@
-const express = require('express');
-const passport = require('passport');
-const mongoose = require('mongoose');
+let express = require('express')
+let router = express.Router()
+let passport = require('passport')
 
-const router = express.Router();
-
-const Post = require('../models/Post');
-const Profile = require('../models/Profile');
+let Post = require('../models/Post.js')
+let Profile = require('../models/Profile.js')
 
 
 
 
+router.get('/test', (request, response) => response.json({ msg: 'Posts Works' }));
 
-router.get('/test', (req, res) => res.json({ msg: 'Posts Works' }));
 
-
-router.get('/', (req, res) => {
-  Post.find().sort({ date: -1 }).then(posts => res.json(posts)).catch(err => res.status(404).json({ nopostsfound: 'Post not found' }));
+router.get('/', (request, response) => {
+  Post.find().sort({ date: -1 }).then(posts => response.json(posts)).catch(error => response.status(404).json({ nopostsfound: 'Post not found' }));
 });
 
 
@@ -26,7 +23,7 @@ router.get('/:post_id', (req, res) => {
 
 router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => {
 
-    const newPost = new Post({
+    let newPost = new Post({
       text: req.body.text,
       name: req.body.name,
       avatar: req.body.avatar,
@@ -48,10 +45,9 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, re
               .json({ notauthorized: 'User not authorized' });
           }
 
-          // Delete
           post.remove().then(() => res.json({ success: true }));
         })
-        .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+        .catch(error => res.status(404).json({ postnotfound: 'No post found' }));
     });
   }
 );
@@ -73,7 +69,7 @@ router.post('/like/:id', passport.authenticate('jwt', { session: false }), (req,
 
           post.save().then(post => res.json(post));
         })
-        .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+        .catch(error => res.status(404).json({ postnotfound: 'No post found' }));
     });
   }
 );
@@ -93,7 +89,7 @@ router.post('/unlike/:id', passport.authenticate('jwt', { session: false }), (re
           }
 
          
-          const removeIndex = post.likes
+          let removeIndex = post.likes
             .map(item => item.user.toString())
             .indexOf(req.user.id);
 
@@ -103,7 +99,7 @@ router.post('/unlike/:id', passport.authenticate('jwt', { session: false }), (re
         
           post.save().then(post => res.json(post));
         })
-        .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+        .catch(error => res.status(404).json({ postnotfound: 'No post found' }));
     });
   }
 );
@@ -113,7 +109,7 @@ router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (r
 
     Post.findById(req.params.id)
       .then(post => {
-        const newComment = {
+        let newComment = {
           text: req.body.text,
           name: req.body.name,
           avatar: req.body.avatar,
@@ -124,7 +120,7 @@ router.post('/comment/:id', passport.authenticate('jwt', { session: false }), (r
 
         post.save().then(post => res.json(post));
       })
-      .catch(err => res.status(404).json({ postnotfound: 'No post found' }));
+      .catch(error => res.status(404).json({ postnotfound: 'No post found' }));
   }
 );
 
@@ -142,13 +138,13 @@ router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', { session
             .json({ commentnotexists: 'Comment does not exist' });
         }
 
-        // Get remove index
-        const removeIndex = post.comments
+
+        let removeIndex = post.comments
           .map(item => item._id.toString())
           .indexOf(req.params.comment_id);
 
-        // Splice comment out of array
-        post.comments.splice(removeIndex, 1);
+
+          post.comments.splice(removeIndex, 1);
 
         post.save().then(post => res.json(post));
       })

@@ -1,13 +1,13 @@
-import React from 'react';
-import classnames from 'classnames';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
 
-const InputGroup = ({
-  name,
+let InputGroup = ({
+  icon,
   placeholder,
+  name,
   value,
   error,
-  icon,
   type,
   onChange
 }) => {
@@ -36,14 +36,12 @@ InputGroup.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   value: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
   icon: PropTypes.string,
   error: PropTypes.string,
-  type: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired
-};
+}
 
-InputGroup.defaultProps = {
-  type: 'text'
-};
+InputGroup.defaultProps = { type: 'text' }
 
-export default InputGroup;
+export default InputGroup

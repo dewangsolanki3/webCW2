@@ -1,19 +1,16 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import TextAreaFieldGroup from '../common/TextAreaFieldGroup.jsx';
-import { addPost } from '../../actions/postActions';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import TextAreaFieldGroup from '../common/TextAreaFieldGroup.jsx'
+import { addPost } from '../../actions/postActions'
 
-class PostForm extends Component {
+class PostForm extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       text: '',
       errors: {}
-    };
-
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    }
   }
 
   componentWillReceiveProps(newProps) {
@@ -22,40 +19,40 @@ class PostForm extends Component {
     }
   }
 
-  onSubmit(e) {
-    e.preventDefault();
+  handleSubmit = (event) => {
+    event.preventDefault()
 
-    const { user } = this.props.auth;
+    let { user } = this.props.auth
 
-    const newPost = {
+    let postData = {
       text: this.state.text,
-      name: user.name,
-      avatar: user.avatar
-    };
+      avatar: user.avatar,
+      name: user.name
+    }
 
-    this.props.addPost(newPost);
-    this.setState({ text: '' });
+    this.props.addPost(postData)
+    this.setState({ text: '' })
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
   render() {
-    const { errors } = this.state;
+    let { errors } = this.state
 
     return (
-      <div className="post-form mb-3">
+      <div className="post-form mb-2">
         <div className="card card-info">
-          <div className="card-header bg-info text-white">Say Somthing...</div>
+          <div className="card-header bg-info text-white">Share your thoughts...</div>
           <div className="card-body">
-            <form onSubmit={this.onSubmit}>
+            <form onSubmit={this.handleSubmit}>
               <div className="form-group">
                 <TextAreaFieldGroup
+                  value={this.state.text}
+                  onChange={this.handleChange}
                   placeholder="Create a post"
                   name="text"
-                  value={this.state.text}
-                  onChange={this.onChange}
                   error={errors.text}
                 />
               </div>
@@ -71,14 +68,14 @@ class PostForm extends Component {
 }
 
 PostForm.propTypes = {
-  addPost: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  addPost: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
-};
+}
 
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
+let stateInProps = (state) => ({
+  errors: state.errors,
+  auth: state.auth
+})
 
-export default connect(mapStateToProps, { addPost })(PostForm);
+export default connect(stateInProps, { addPost })(PostForm)

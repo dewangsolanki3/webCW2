@@ -1,20 +1,20 @@
-import  { SET_CURRENT_USER } from '../actions/constants'
+import  { SET_CURRENT_USER } from '../actions/types'
 import isEmpty from '../validation/is-empty'
 
-let inState = { user: {}, isAuth: false }
+const initialState = {
+    isAuthenticated: false,
+    user: {}
+}
 
-let reducerAuth = (state = inState, action) => {
+export default function(state= initialState, action){
     switch(action.type){  
         case SET_CURRENT_USER:
             return { 
                 ...state,
-                isAuth: !isEmpty(action.payload),
+                isAuthenticated: !isEmpty(action.payload),
                 user: action.payload
             }
         default:
             return state
     }
 }
-
-
-export default reducerAuth

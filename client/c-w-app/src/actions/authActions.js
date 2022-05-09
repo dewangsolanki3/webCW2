@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_ERRORS,SET_CURRENT_USER } from './constants.js'
+import { GET_ERRORS,SET_CURRENT_USER } from './types'
 import setAuthToken from '../utils/setAuthToken'
 import jwt_decode from  'jwt-decode'
 
@@ -17,8 +17,10 @@ export const registerUser = (userData,history) => dispatch => {
 
 //login get user token
 export const loginUser = (userData) => dispatch => {
+    console.log(userData)
     axios.post('/api/users/login', userData)
     .then(res => {
+        console.log(res, "Client side ")
         const { token } = res.data;
         localStorage.setItem('jwtToken', token)
         //set to auth header

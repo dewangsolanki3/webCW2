@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { deleteComment } from '../../actions/postActions';
+import React from 'react'
+import { deleteComment } from '../../actions/postActions.js'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-class CommentItem extends Component {
-  onDeleteClick(postId, commentId) {
-    this.props.deleteComment(postId, commentId);
+class CommentItem extends React.Component {
+  clickDelete = (postId, commentId) => {
+    this.props.deleteComment(postId, commentId)
   }
 
   render() {
-    const { comment, postId, auth } = this.props;
+    let { comment, postId, auth } = this.props
 
     return (
       <div className="card card-body mb-3">
@@ -29,9 +29,9 @@ class CommentItem extends Component {
             <p className="lead">{comment.text}</p>
             {comment.user === auth.user.id ? (
               <button
-                onClick={this.onDeleteClick.bind(this, postId, comment._id)}
+                onClick={this.clickDelete(postId, comment._id)}
                 type="button"
-                className="btn btn-danger mr-1"
+                className="btn-danger mr-2 btn "
               >
                 <i className="fas fa-times" />
               </button>
@@ -39,19 +39,17 @@ class CommentItem extends Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
 CommentItem.propTypes = {
   deleteComment: PropTypes.func.isRequired,
-  comment: PropTypes.object.isRequired,
   postId: PropTypes.string.isRequired,
+  comment: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired
-};
+}
 
-const mapStateToProps = state => ({
-  auth: state.auth
-});
+let stateInProps = (state) => ({ auth: state.auth })
 
-export default connect(mapStateToProps, { deleteComment })(CommentItem);
+export default connect(stateInProps, { deleteComment })(CommentItem)

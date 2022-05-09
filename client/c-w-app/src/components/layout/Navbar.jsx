@@ -1,23 +1,25 @@
-import React, { Component } from "react"
+import React from "react"
 import { Link } from "react-router-dom"
 import propTypes from "prop-types"
 import { connect } from "react-redux"
-import { logoutUser } from "../../actions/authActions"
-import { clearCurrentProfile } from "../../actions/profileActions"
+import { clearCurrentProfile } from "../../actions/profileActions.js"
+import { logoutUser } from "../../actions/authActions.js"
 
-class Navbar extends Component {
-  onLogoutClick(e) {
-    e.preventDefault()
-    this.props.clearCurrentProfile()
+
+class Navbar extends React.Component {
+  clickLogout = (event) => {
+    event.preventDefault()
     this.props.logoutUser()
+    this.props.clearCurrentProfile()
   }
-  render() {
-    const { isAuthenticated, user } = this.props.auth
 
-    const authLinks = (
-      <ul className="navbar-nav ml-auto">
+  render() {
+    let { isAuthenticated, user } = this.props.auth
+
+    let authLinks = (
+      <ul className = "ml-auto navbar-nav ">
         <li className="nav-item">
-          <Link className="nav-link" to="/feed">
+          <Link to="/feed" className="nav-link">
             Post Feed
           </Link>
         </li>
@@ -28,16 +30,16 @@ class Navbar extends Component {
         </li>
         <li className="nav-item">
           <Link
-            to="#"
-            onClick={this.onLogoutClick.bind(this)}
+            onClick={this.clickLogout}
             className="nav-link"
+            to="#"
           >
             <img
               className="rounded-circle"
+              title="you must have a Gravatar connected"
               src={user.avatar}
               alt={user.name}
               style={{ width: "25px", marginRight: "5px" }}
-              title="you must have a Gravatar connected"
             />
             Logout
           </Link>
@@ -45,33 +47,36 @@ class Navbar extends Component {
       </ul>
     )
 
-    const guestLinks = (
+    let guestLinks = (
       <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <Link className="nav-link" to="/register">
-            Sign Up
-          </Link>
-        </li>
+       
         <li className="nav-item">
           <Link className="nav-link" to="/login">
             Login
           </Link>
         </li>
+        
+        <li className="nav-item">
+          <Link className="nav-link" to="/register">
+            Register
+          </Link>
+        </li>
+      
       </ul>
     )
 
     return (
-      <div>
-        <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+      <>
+        <nav style = {{ position: "relative", zIndex: 10 , width: "100%"}} className="mb-4 navbar navbar-dark bg-dark navbar-expand-sm">
           <div className="container">
             <Link className="navbar-brand" to="/">
               GetConnect
             </Link>
             <button
               className="navbar-toggler"
+              data-target="#mobile-nav"
               type="button"
               data-toggle="collapse"
-              data-target="#mobile-nav"
             >
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -89,19 +94,17 @@ class Navbar extends Component {
             </div>
           </div>
         </nav>
-      </div>
+      </>
     )
   }
 }
 
 Navbar.propType = {
-  logoutUser: propTypes.func.isRequired,
-  auth: propTypes.object.isRequired
+  auth: propTypes.object.isRequired,
+  logoutUser: propTypes.func.isRequired
 }
-const mapStateToProps = (state) => ({
+const stateInProps = state => ({
   auth: state.auth
 })
 
-export default connect(mapStateToProps, { logoutUser, clearCurrentProfile })(
-  Navbar
-)
+export default connect(stateInProps, { logoutUser, clearCurrentProfile })( Navbar )

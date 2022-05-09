@@ -13,7 +13,7 @@ html, body{
 
 .landing {
   position: absolute;
-  background: url('./img/showcase2.jpg') no-repeat;
+  background: url('./img/landingBg.jpg') no-repeat;
   background-size: cover;
   background-position: center;
   height: 100%;
