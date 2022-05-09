@@ -77,7 +77,7 @@ class CreateProfile extends Component {
     }
   }
 
-  onSubmit(event) {
+  onSubmit = (event) => {
     event.preventDefault()
 
     let bio = {
